@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # Python setup (existing scrapers)
+      # ── Python setup ──────────────────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -29,41 +29,41 @@ jobs:
         run: pip install requests
 
       - name: Seed Supabase from JSON files
-        if: ${{ github.event.inputs.seed_only == 'true' }}
+        if: github.event.inputs.seed_only == 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python scripts/seed_supabase.py
 
       - name: Run weekly price scraper (businesses + fuel)
-        if: ${{ github.event.inputs.seed_only != 'true' }}
+        if: github.event.inputs.seed_only != 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python scripts/scrape_and_update.py
 
-      # Node.js setup (grocery scraper + future JS scrapers)
+      # ── Node.js setup (grocery scraper + future JS scrapers) ─────────
       - name: Set up Node.js
-        if: ${{ github.event.inputs.seed_only != 'true' }}
+        if: github.event.inputs.seed_only != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
       - name: Install Node.js dependencies
-        if: ${{ github.event.inputs.seed_only != 'true' }}
+        if: github.event.inputs.seed_only != 'true'
         run: npm install @supabase/supabase-js
 
       - name: Run grocery price scraper
-        if: ${{ github.event.inputs.seed_only != 'true' }}
+        if: github.event.inputs.seed_only != 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: node scripts/scrape-groceries.js
 
-      # ADD NEW SCRAPERS HERE
+      # ── ADD NEW SCRAPERS HERE ─────────────────────────────────────────
       # Python example:
       #   - name: Run <name> scraper
-      #     if: ${{ github.event.inputs.seed_only != 'true' }}
+      #     if: github.event.inputs.seed_only != 'true'
       #     env:
       #       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       #       SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
@@ -71,11 +71,12 @@ jobs:
       #
       # Node.js example:
       #   - name: Run <name> scraper
-      #     if: ${{ github.event.inputs.seed_only != 'true' }}
+      #     if: github.event.inputs.seed_only != 'true'
       #     env:
       #       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       #       SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       #     run: node scripts/<your-script>.js
+      # ─────────────────────────────────────────────────────────────────
 
       - name: Log completion
         run: echo "All scrapers completed at $(date '+%Y-%m-%d %H:%M:%S UTC')"
