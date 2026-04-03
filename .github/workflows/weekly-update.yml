@@ -1,0 +1,47 @@
+name: Weekly Price Update
+
+on:
+  schedule:
+    - cron: '0 6 * * 0'   # Every Sunday at 6 AM UTC (4 PM AEST)
+  workflow_dispatch:        # Manual trigger from GitHub UI
+    inputs:
+      seed_only:
+        description: 'Run seed script only (first-time setup)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      # One-time seed: manually triggered with seed_only=true
+      - name: Seed Supabase from JSON files
+        if: ${{ github.event.inputs.seed_only == 'true' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scripts/seed_supabase.py
+
+      # Weekly scrape: runs on schedule or manual trigger without seed_only
+      - name: Run weekly price scraper
+        if: ${{ github.event.inputs.seed_only != 'true' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scripts/scrape_and_update.py
+
+      - name: Log completion
+        run: echo "Run completed at $(date '+%Y-%m-%d %H:%M:%S UTC')"
