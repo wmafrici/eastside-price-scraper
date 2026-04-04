@@ -1,6 +1,6 @@
 /**
  * scrape-groceries.js
- * Pricee Grocery Price Scraper â Eastern Suburbs Melbourne
+ * Pricee Grocery Price Scraper Ã¢ÂÂ Eastern Suburbs Melbourne
  *
  * Scrapes current prices for 8 grocery staples from Coles, Woolworths & Aldi
  * and inserts results into Supabase grocery_prices table.
@@ -33,6 +33,7 @@ const SUBURBS = [
   { name: 'Croydon', postcode: 3136 },
   { name: 'Ringwood', postcode: 3134 },
   { name: 'Box Hill', postcode: 3128 },
+  { name: 'Mooroolbark', postcode: 3138 },
 ];
 
 const ITEMS = [
@@ -296,7 +297,7 @@ async function insertToSupabase(rows) {
 }
 
 async function main() {
-  console.log(`\nPricee Grocery Scraper â ${TODAY}`);
+  console.log(`\nPricee Grocery Scraper Ã¢ÂÂ ${TODAY}`);
   console.log('=' .repeat(50));
 
   const [colesData, woolworthsData, aldiData] = await Promise.all([
