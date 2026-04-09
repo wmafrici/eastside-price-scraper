@@ -36,6 +36,7 @@ SUBURBS = [
     {"name": "Belgrave",       "postcode": "3160"},
     {"name": "Croydon",        "postcode": "3136"},
     {"name": "Ringwood",       "postcode": "3134"},
+    {"name": "Blackburn",      "postcode": "3130"},
     {"name": "Box Hill",       "postcode": "3128"},
     {"name": "Mooroolbark",    "postcode": "3138"},
 ]
