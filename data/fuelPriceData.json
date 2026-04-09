@@ -2,11 +2,10 @@
   "version": "1.0",
   "generatedDate": "2026-04-03",
   "dataSource": "Eastern Suburbs Melbourne - Cowork Web Scrape (PetrolSpy, FuelRadar, ServoTrack, OzBargain)",
-  "totalStations": 28,
+  "totalStations": 30,
   "priceUnit": "cents per litre (AUD)",
   "note": "Prices scraped 2026-04-03. Fuel prices change daily — re-verify before publishing. Melbourne prices follow weekly cycles; cheapest typically Mon–Wed.",
   "stations": [
-
     {
       "id": "rowville-ampol-001",
       "stationName": "Ampol Rowville",
@@ -127,7 +126,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "doncaster-metro-001",
       "stationName": "Metro Doncaster East",
@@ -200,7 +198,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "glenwaverley-cornerservo-001",
       "stationName": "The Corner Servo",
@@ -297,7 +294,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "boronia-boronicarcare-001",
       "stationName": "Boronia Car Care",
@@ -346,7 +342,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "ferntreegully-bp-001",
       "stationName": "BP Ferntree Gully",
@@ -419,7 +414,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "belgrave-ampol-001",
       "stationName": "Ampol Belgrave South",
@@ -433,7 +427,7 @@
         "ulp91": 179.9,
         "e10": 239.9,
         "premium95": 192.9,
-        "premium98": 204.0,
+        "premium98": 204,
         "diesel": 189.9,
         "lpg": null
       },
@@ -444,7 +438,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "croydon-bp-001",
       "stationName": "BP Croydon",
@@ -541,7 +534,6 @@
       "verified": true,
       "dateScrapped": "2026-04-03"
     },
-
     {
       "id": "ringwood-egampol-001",
       "stationName": "EG Ampol Ringwood",
@@ -661,10 +653,44 @@
       "sourceUrl": "https://petrolbuddy.net.au/locations/Ringwood-North_3134.html",
       "verified": true,
       "dateScrapped": "2026-04-03"
+    },
+    {
+      "id": "blackburn-7eleven-001",
+      "stationName": "7-Eleven Blackburn",
+      "brand": "7-Eleven",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "address": "Blackburn VIC 3130",
+      "googleMapsUrl": "https://maps.google.com/?q=7-Eleven+Blackburn+VIC",
+      "ulp91": 229.9,
+      "e10": null,
+      "diesel": 279.9,
+      "lpg": null,
+      "premium98": null,
+      "source": "7-Eleven app / GasBuddy",
+      "sourceUrl": "https://www.7eleven.com.au",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-bp-001",
+      "stationName": "BP Blackburn",
+      "brand": "BP",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "address": "Blackburn VIC 3130",
+      "googleMapsUrl": "https://maps.google.com/?q=BP+Blackburn+VIC",
+      "ulp91": 239.9,
+      "e10": null,
+      "diesel": null,
+      "lpg": null,
+      "premium98": null,
+      "source": "GasBuddy",
+      "sourceUrl": "https://www.gasbuddy.com",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
     }
-
   ],
-
   "suburbSummary": [
     {
       "suburb": "Rowville",
@@ -745,6 +771,16 @@
       "cheapestE10": 203.9,
       "cheapestDiesel": 179.5,
       "avgULP91": 202.62
+    },
+    {
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "stationCount": 2,
+      "cheapestULP91": 229.9,
+      "cheapestULP91Station": "7-Eleven Blackburn",
+      "cheapestE10": null,
+      "cheapestDiesel": 279.9,
+      "avgULP91": 234.9
     }
   ]
 }
