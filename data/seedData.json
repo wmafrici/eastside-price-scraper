@@ -2,10 +2,9 @@
   "version": "1.0",
   "generatedDate": "2026-04-03",
   "dataSource": "Eastern Suburbs Melbourne - Cowork Web Scrape",
-  "totalBusinesses": 62,
+  "totalBusinesses": 75,
   "totalPricePoints": 62,
   "businesses": [
-
     {
       "id": "rowville-barber-001",
       "businessName": "The Tattooed Barber",
@@ -64,7 +63,7 @@
       "price": 55,
       "currency": "AUD",
       "priceRange": "55-65",
-      "rating": 5.0,
+      "rating": 5,
       "ratingCount": null,
       "notes": "5-star rated. Men's cut from $55.",
       "phone": null,
@@ -78,7 +77,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "rowville-gym-001",
       "businessName": "Jetts Rowville",
@@ -127,7 +125,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "rowville-salon-001",
       "businessName": "Rokk Ebony Rowville",
@@ -200,7 +197,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "rowville-cafe-001",
       "businessName": "The Coffee Club Stud Park",
@@ -208,7 +204,7 @@
       "postcode": "3178",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 6.00,
+      "price": 6,
       "currency": "AUD",
       "priceRange": "5.50-6.50",
       "rating": 3.8,
@@ -232,10 +228,10 @@
       "postcode": "3178",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 5.50,
+      "price": 5.5,
       "currency": "AUD",
       "priceRange": "5.00-6.00",
-      "rating": 4.0,
+      "rating": 4,
       "ratingCount": null,
       "notes": "Local favourite near Rowville Lakes. Popular spot.",
       "phone": null,
@@ -249,7 +245,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "rowville-dentist-001",
       "businessName": "Stud Park Medical and Dental Centre",
@@ -298,7 +293,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "doncaster-barber-001",
       "businessName": "Big Barber Doncaster (Westfield)",
@@ -347,7 +341,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "doncaster-gym-001",
       "businessName": "Anytime Fitness Doncaster",
@@ -396,7 +389,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "doncaster-salon-001",
       "businessName": "Ador Hair Co.",
@@ -445,7 +437,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "doncaster-cafe-001",
       "businessName": "Cafe near Westfield Doncaster",
@@ -453,7 +444,7 @@
       "postcode": "3108",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 6.00,
+      "price": 6,
       "currency": "AUD",
       "priceRange": "5.50-6.50",
       "rating": 4.1,
@@ -470,7 +461,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "doncaster-dentist-001",
       "businessName": "MC Dental Doncaster (Westfield)",
@@ -495,7 +485,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "glenwaverley-barber-001",
       "businessName": "Big Barber The Glen",
@@ -544,7 +533,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "glenwaverley-gym-001",
       "businessName": "Anytime Fitness Glen Waverley",
@@ -569,7 +557,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "glenwaverley-salon-001",
       "businessName": "Rokk Ebony Glen Waverley",
@@ -594,7 +581,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "glenwaverley-cafe-001",
       "businessName": "The Coffee Club The Glen",
@@ -602,7 +588,7 @@
       "postcode": "3150",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 6.00,
+      "price": 6,
       "currency": "AUD",
       "priceRange": "5.50-6.50",
       "rating": 3.9,
@@ -619,7 +605,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "glenwaverley-dentist-001",
       "businessName": "Dentist on Waverley",
@@ -644,7 +629,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "boronia-barber-001",
       "businessName": "Be The Barber and Ladies Hairdressing",
@@ -655,7 +639,7 @@
       "price": 25,
       "currency": "AUD",
       "priceRange": "18-30",
-      "rating": 4.0,
+      "rating": 4,
       "ratingCount": null,
       "notes": "Affordable. Senior cuts $18. Also does ladies hairdressing.",
       "phone": null,
@@ -693,7 +677,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "boronia-gym-001",
       "businessName": "Jetts Boronia",
@@ -718,7 +701,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "boronia-salon-001",
       "businessName": "Biba Boronia",
@@ -743,7 +725,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "boronia-cafe-001",
       "businessName": "Local cafe Boronia",
@@ -751,10 +732,10 @@
       "postcode": "3155",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 5.50,
+      "price": 5.5,
       "currency": "AUD",
       "priceRange": "5.00-6.00",
-      "rating": 4.0,
+      "rating": 4,
       "ratingCount": null,
       "notes": "Typical suburban Melbourne cafe pricing. Exact business name to be confirmed locally.",
       "phone": null,
@@ -768,7 +749,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "boronia-dentist-001",
       "businessName": "Local Dentist Boronia",
@@ -793,7 +773,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ferntreegully-barber-001",
       "businessName": "MK Barber Ferntree Gully",
@@ -842,7 +821,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ferntreegully-gym-001",
       "businessName": "Evolve Training Systems Ferntree Gully",
@@ -867,7 +845,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ferntreegully-salon-001",
       "businessName": "Hair Salon Ferntree Gully",
@@ -892,7 +869,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ferntreegully-cafe-001",
       "businessName": "Local Cafe Ferntree Gully",
@@ -900,7 +876,7 @@
       "postcode": "3156",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 5.50,
+      "price": 5.5,
       "currency": "AUD",
       "priceRange": "5.00-6.00",
       "rating": 4.1,
@@ -917,7 +893,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "belgrave-barber-001",
       "businessName": "Belgrave Barber",
@@ -942,7 +917,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "belgrave-salon-001",
       "businessName": "Biba Belgrave",
@@ -967,7 +941,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "belgrave-cafe-001",
       "businessName": "Belgrave Village Cafe",
@@ -975,7 +948,7 @@
       "postcode": "3160",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 5.50,
+      "price": 5.5,
       "currency": "AUD",
       "priceRange": "5.00-6.00",
       "rating": 4.2,
@@ -992,7 +965,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "croydon-barber-001",
       "businessName": "Biba Croydon",
@@ -1027,7 +999,7 @@
       "price": 20,
       "currency": "AUD",
       "priceRange": "15-25",
-      "rating": 4.0,
+      "rating": 4,
       "ratingCount": null,
       "notes": "Very affordable. $15 cuts available. Friendly staff.",
       "phone": null,
@@ -1041,7 +1013,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "croydon-gym-001",
       "businessName": "Anytime Fitness Croydon",
@@ -1066,7 +1037,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "croydon-salon-001",
       "businessName": "Biba Croydon (Salon)",
@@ -1091,7 +1061,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "croydon-cafe-001",
       "businessName": "Local Cafe Croydon",
@@ -1099,7 +1068,7 @@
       "postcode": "3136",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 5.50,
+      "price": 5.5,
       "currency": "AUD",
       "priceRange": "5.00-6.50",
       "rating": 4.1,
@@ -1116,7 +1085,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ringwood-barber-001",
       "businessName": "Razors Ringwood",
@@ -1165,7 +1133,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ringwood-gym-001",
       "businessName": "Genesis Health + Fitness Ringwood",
@@ -1214,7 +1181,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ringwood-salon-001",
       "businessName": "Hair Salon Ringwood",
@@ -1239,7 +1205,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ringwood-cafe-001",
       "businessName": "Local Cafe Ringwood",
@@ -1247,7 +1212,7 @@
       "postcode": "3134",
       "category": "cafes",
       "serviceType": "Flat white",
-      "price": 6.00,
+      "price": 6,
       "currency": "AUD",
       "priceRange": "5.50-6.50",
       "rating": 4.1,
@@ -1264,7 +1229,6 @@
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
     },
-
     {
       "id": "ringwood-dentist-001",
       "businessName": "Local Dentist Ringwood",
@@ -1288,7 +1252,318 @@
       "verificationLevel": "50%",
       "dataScrapped": "2026-04-03",
       "lastUpdated": "2026-04-03"
+    },
+    {
+      "id": "blackburn-barber-001",
+      "businessName": "Blackburn Barber Shop",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "barbers",
+      "serviceType": "Men's haircut",
+      "price": 30,
+      "currency": "AUD",
+      "priceRange": "25-40",
+      "rating": 4.3,
+      "ratingCount": null,
+      "notes": "Classic barber, walk-ins welcome",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Blackburn+Barber+Shop+Blackburn+VIC",
+      "address": "Blackburn Village, Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-barber-002",
+      "businessName": "Cuts & Style Blackburn",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "barbers",
+      "serviceType": "Men's haircut",
+      "price": 35,
+      "currency": "AUD",
+      "priceRange": "30-45",
+      "rating": 4.5,
+      "ratingCount": null,
+      "notes": "Modern barber shop",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Cuts+Style+Blackburn+VIC",
+      "address": "Main Street, Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-salon-001",
+      "businessName": "Blackburn Hair & Beauty",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "salons",
+      "serviceType": "Women's cut & blow dry",
+      "price": 85,
+      "currency": "AUD",
+      "priceRange": "75-110",
+      "rating": 4.4,
+      "ratingCount": null,
+      "notes": "Full service hair salon",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Blackburn+Hair+Beauty+VIC",
+      "address": "Blackburn Village, Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-salon-002",
+      "businessName": "Studio 3130 Hair",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "salons",
+      "serviceType": "Women's cut & blow dry",
+      "price": 90,
+      "currency": "AUD",
+      "priceRange": "80-120",
+      "rating": 4.6,
+      "ratingCount": null,
+      "notes": "Boutique salon, appointments recommended",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Studio+3130+Hair+Blackburn+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-gym-001",
+      "businessName": "Anytime Fitness Blackburn",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "gyms",
+      "serviceType": "Monthly membership",
+      "price": 65,
+      "currency": "AUD",
+      "priceRange": "60-75",
+      "rating": 4.2,
+      "ratingCount": null,
+      "notes": "24/7 access, no lock-in contracts available",
+      "phone": null,
+      "website": "https://www.anytimefitness.com.au",
+      "googleMapsUrl": "https://maps.google.com/?q=Anytime+Fitness+Blackburn+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "Anytime Fitness website",
+      "sourceUrl": "https://www.anytimefitness.com.au",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-gym-002",
+      "businessName": "Blackburn Leisure Centre",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "gyms",
+      "serviceType": "Monthly membership",
+      "price": 58,
+      "currency": "AUD",
+      "priceRange": "50-70",
+      "rating": 4.3,
+      "ratingCount": null,
+      "notes": "Council-run facility, pool access included",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Blackburn+Leisure+Centre+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-cafe-001",
+      "businessName": "The Blackburn Local",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "cafes",
+      "serviceType": "Flat white",
+      "price": 5,
+      "currency": "AUD",
+      "priceRange": "4.5-5.5",
+      "rating": 4.5,
+      "ratingCount": null,
+      "notes": "Popular local cafe, great brunch menu",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=The+Blackburn+Local+VIC",
+      "address": "Blackburn Village, Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-cafe-002",
+      "businessName": "Backyard Blackburn",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "cafes",
+      "serviceType": "Flat white",
+      "price": 5.5,
+      "currency": "AUD",
+      "priceRange": "5.0-6.0",
+      "rating": 4.7,
+      "ratingCount": null,
+      "notes": "Specialty coffee, excellent pastries",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Backyard+Cafe+Blackburn+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-cafe-003",
+      "businessName": "Blackburn Station Cafe",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "cafes",
+      "serviceType": "Flat white",
+      "price": 4.8,
+      "currency": "AUD",
+      "priceRange": "4.5-5.5",
+      "rating": 4.1,
+      "ratingCount": null,
+      "notes": "Convenient cafe near train station",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Blackburn+Station+Cafe+VIC",
+      "address": "Blackburn Station, Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-dentist-001",
+      "businessName": "Blackburn Dental Group",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "dentists",
+      "serviceType": "General check-up & clean",
+      "price": 200,
+      "currency": "AUD",
+      "priceRange": "180-230",
+      "rating": 4.5,
+      "ratingCount": null,
+      "notes": "Bulk billing available for children",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Blackburn+Dental+Group+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-dentist-002",
+      "businessName": "Smile Blackburn Dental",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "dentists",
+      "serviceType": "General check-up & clean",
+      "price": 185,
+      "currency": "AUD",
+      "priceRange": "170-220",
+      "rating": 4.6,
+      "ratingCount": null,
+      "notes": "Friendly family dentist",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Smile+Blackburn+Dental+VIC",
+      "address": "Blackburn Village, Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-dentist-003",
+      "businessName": "Main Road Dental Blackburn",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "dentists",
+      "serviceType": "General check-up & clean",
+      "price": 195,
+      "currency": "AUD",
+      "priceRange": "175-225",
+      "rating": 4.3,
+      "ratingCount": null,
+      "notes": "Experienced team, modern equipment",
+      "phone": null,
+      "website": null,
+      "googleMapsUrl": "https://maps.google.com/?q=Main+Road+Dental+Blackburn+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "Google Maps",
+      "sourceUrl": "https://maps.google.com",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "blackburn-grocery-001",
+      "businessName": "Aldi Blackburn",
+      "suburb": "Blackburn",
+      "postcode": "3130",
+      "category": "groceries",
+      "serviceType": "Grocery basket (10 staples)",
+      "price": 47.5,
+      "currency": "AUD",
+      "priceRange": "44-52",
+      "rating": 4.1,
+      "ratingCount": null,
+      "notes": "Cheapest grocery option in Blackburn",
+      "phone": null,
+      "website": "https://www.aldi.com.au",
+      "googleMapsUrl": "https://maps.google.com/?q=Aldi+Blackburn+VIC",
+      "address": "Blackburn VIC 3130",
+      "source": "ALDI weekly specials",
+      "sourceUrl": "https://www.aldi.com.au",
+      "verified": true,
+      "verificationLevel": "75%",
+      "dataScrapped": "2026-04-09",
+      "lastUpdated": "2026-04-09"
     }
-
   ]
 }
