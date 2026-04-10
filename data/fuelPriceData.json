@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "generatedDate": "2026-04-03",
+  "generatedDate": "2026-04-10",
   "dataSource": "Eastern Suburbs Melbourne - Cowork Web Scrape (PetrolSpy, FuelRadar, ServoTrack, OzBargain)",
-  "totalStations": 30,
+  "totalStations": 32,
   "priceUnit": "cents per litre (AUD)",
-  "note": "Prices scraped 2026-04-03. Fuel prices change daily — re-verify before publishing. Melbourne prices follow weekly cycles; cheapest typically Mon–Wed.",
+  "note": "Prices scraped 2026-04-03. Fuel prices change daily â re-verify before publishing. Melbourne prices follow weekly cycles; cheapest typically MonâWed.",
   "stations": [
     {
       "id": "rowville-ampol-001",
@@ -689,6 +689,78 @@
       "sourceUrl": "https://www.gasbuddy.com",
       "dataScrapped": "2026-04-09",
       "lastUpdated": "2026-04-09"
+    },
+    {
+      "id": "knox-bp-001",
+      "stationName": "BP Wantirna South",
+      "brand": "BP",
+      "suburb": "Knox",
+      "postcode": "3152",
+      "address": "444 Stud Road, Wantirna South VIC 3152",
+      "phone": null,
+      "openingHours": "24/7",
+      "prices": {
+        "ulp91": 239.9,
+        "e10": null,
+        "premium95": null,
+        "premium98": null,
+        "diesel": 294.9,
+        "lpg": null
+      },
+      "cheapestFuel": "ULP91 @ 239.9c",
+      "googleMapsUrl": "https://maps.google.com/?q=BP+444+Stud+Road+Wantirna+South",
+      "source": "PetrolSpy",
+      "sourceUrl": "https://petrolspy.com.au/map/suburb/knox-3152",
+      "verified": true,
+      "dateScrapped": "2026-04-10"
+    },
+    {
+      "id": "knox-ampol-001",
+      "stationName": "Ampol Wantirna South",
+      "brand": "Ampol",
+      "suburb": "Knox",
+      "postcode": "3152",
+      "address": "1321 High Street Road, Wantirna South VIC 3152",
+      "phone": null,
+      "openingHours": "24/7",
+      "prices": {
+        "ulp91": 227.9,
+        "e10": null,
+        "premium95": null,
+        "premium98": null,
+        "diesel": 304.9,
+        "lpg": null
+      },
+      "cheapestFuel": "ULP91 @ 227.9c",
+      "googleMapsUrl": "https://maps.google.com/?q=Ampol+Wantirna+South+High+Street+Road",
+      "source": "PetrolSpy",
+      "sourceUrl": "https://petrolspy.com.au/map/suburb/knox-3152",
+      "verified": true,
+      "dateScrapped": "2026-04-10"
+    },
+    {
+      "id": "knox-7eleven-001",
+      "stationName": "7-Eleven Wantirna South",
+      "brand": "7-Eleven",
+      "suburb": "Knox",
+      "postcode": "3152",
+      "address": "401 Burwood Highway, Wantirna South VIC 3152",
+      "phone": null,
+      "openingHours": "24/7",
+      "prices": {
+        "ulp91": 235.9,
+        "e10": null,
+        "premium95": null,
+        "premium98": null,
+        "diesel": 299.9,
+        "lpg": null
+      },
+      "cheapestFuel": "ULP91 @ 235.9c",
+      "googleMapsUrl": "https://maps.google.com/?q=7-Eleven+401+Burwood+Highway+Wantirna+South",
+      "source": "PetrolSpy",
+      "sourceUrl": "https://petrolspy.com.au/map/suburb/knox-3152",
+      "verified": true,
+      "dateScrapped": "2026-04-10"
     }
   ],
   "suburbSummary": [
