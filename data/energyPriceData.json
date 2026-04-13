@@ -1,0 +1,160 @@
+{
+  "version": "1.0",
+  "generatedDate": "2026-04-13",
+  "dataSource": "Victorian Default Offer (VDO) 2025-26 - Essential Services Commission (ESC) Victoria",
+  "sourceUrl": "https://www.esc.vic.gov.au/electricity-and-gas/prices-tariffs-and-benchmarks/victorian-default-offer",
+  "priceUnit": "AUD (GST inclusive)",
+  "region": "Victoria, Australia",
+  "effectivePeriod": "1 July 2025 - 30 June 2026",
+  "note": "Prices are the Victorian Default Offer (VDO) standing offer tariffs set by the Essential Services Commission. They apply to all electricity retailers in Victoria (AGL, Origin Energy, Energy Australia, etc.) for customers on standing offers. Market offer rates vary by retailer; use https://compare.energy.vic.gov.au to compare. Prices scraped 2026-04-13.",
+  "totalProviders": 5,
+  "providers": [
+    {
+      "id": "ausnet-services-vic",
+      "providerName": "AusNet Services",
+      "providerType": "distributor",
+      "state": "VIC",
+      "distributionZone": "AusNet Services",
+      "distributionZoneNote": "Covers eastern Melbourne suburbs and large regional areas including Gippsland",
+      "postcodeExamples": ["3000", "3128", "3150", "3170", "3800", "3840"],
+      "electricityTariffs": {
+        "flatTariff": {
+          "type": "flat",
+          "customerType": "domestic",
+          "supplyChargeDailyAUD": 1.4146,
+          "usageCharges": {
+            "structure": "block",
+            "block1": {"description": "Up to 1020 kWh per quarter", "ratePerKWhAUD": 0.3477},
+            "block2": {"description": "Over 1020 kWh per quarter", "ratePerKWhAUD": 0.3477},
+            "controlledLoad": {"ratePerKWhAUD": 0.2399}
+          }
+        },
+        "flatTariffSmallBusiness": {
+          "type": "flat", "customerType": "small_business",
+          "supplyChargeDailyAUD": 1.4146,
+          "usageCharges": {"structure": "block",
+            "block1": {"description": "Up to 1020 kWh per quarter", "ratePerKWhAUD": 0.3881},
+            "block2": {"description": "Over 1020 kWh per quarter", "ratePerKWhAUD": 0.3881}
+          }
+        },
+        "timeOfUseTariff": {
+          "type": "time_of_use_2period", "customerType": "domestic",
+          "supplyChargeDailyAUD": 1.4146,
+          "usageCharges": {
+            "peak": {"description": "3 pm to 9 pm everyday", "ratePerKWhAUD": 0.4682},
+            "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2399},
+            "controlledLoad": {"ratePerKWhAUD": 0.2399}
+          }
+        },
+        "timeOfUseTariffSmallBusiness": {
+          "type": "time_of_use_2period", "customerType": "small_business",
+          "supplyChargeDailyAUD": 1.4146,
+          "usageCharges": {
+            "peak": {"description": "9 am to 9 pm weekdays", "ratePerKWhAUD": 0.4031},
+            "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2198}
+          }
+        }
+      },
+      "source": "ESC Victorian Default Offer 2025-26",
+      "sourceUrl": "https://www.esc.vic.gov.au/electricity-and-gas/prices-tariffs-and-benchmarks/victorian-default-offer",
+      "verified": true,
+      "dateScrapped": "2026-04-13"
+    },
+    {
+      "id": "citipower-vic",
+      "providerName": "CitiPower",
+      "providerType": "distributor",
+      "state": "VIC",
+      "distributionZone": "CitiPower",
+      "distributionZoneNote": "Covers inner Melbourne CBD and inner eastern suburbs",
+      "postcodeExamples": ["3000", "3002", "3004", "3006", "3051", "3053", "3121", "3141"],
+      "electricityTariffs": {
+        "flatTariff": {"type": "flat", "customerType": "domestic", "supplyChargeDailyAUD": 1.2407,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.2733}, "controlledLoad": {"ratePerKWhAUD": 0.2012}}},
+        "flatTariffSmallBusiness": {"type": "flat", "customerType": "small_business", "supplyChargeDailyAUD": 1.4469,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.2657}}},
+        "timeOfUseTariff": {"type": "time_of_use_2period", "customerType": "domestic", "supplyChargeDailyAUD": 1.2407,
+          "usageCharges": {"peak": {"description": "3 pm to 9 pm everyday", "ratePerKWhAUD": 0.3633},
+            "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2206}, "controlledLoad": {"ratePerKWhAUD": 0.2012}}},
+        "timeOfUseTariffSmallBusiness": {"type": "time_of_use_2period", "customerType": "small_business", "supplyChargeDailyAUD": 1.4469,
+          "usageCharges": {"peak": {"description": "9 am to 9 pm weekdays", "ratePerKWhAUD": 0.3305}, "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.1947}}}
+      },
+      "source": "ESC Victorian Default Offer 2025-26",
+      "sourceUrl": "https://www.esc.vic.gov.au/electricity-and-gas/prices-tariffs-and-benchmarks/victorian-default-offer",
+      "verified": true,
+      "dateScrapped": "2026-04-13"
+    },
+    {
+      "id": "jemena-vic",
+      "providerName": "Jemena",
+      "providerType": "distributor",
+      "state": "VIC",
+      "distributionZone": "Jemena",
+      "distributionZoneNote": "Covers north and north-western Melbourne suburbs",
+      "postcodeExamples": ["3031", "3040", "3042", "3055", "3072", "3081", "3083"],
+      "electricityTariffs": {
+        "flatTariff": {"type": "flat", "customerType": "domestic", "supplyChargeDailyAUD": 1.2301,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.2972}, "controlledLoad": {"ratePerKWhAUD": 0.2314}}},
+        "flatTariffSmallBusiness": {"type": "flat", "customerType": "small_business", "supplyChargeDailyAUD": 1.5834,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.3141}}},
+        "timeOfUseTariff": {"type": "time_of_use_2period", "customerType": "domestic", "supplyChargeDailyAUD": 1.2301,
+          "usageCharges": {"peak": {"description": "3 pm to 9 pm everyday", "ratePerKWhAUD": 0.3761},
+            "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2368}, "controlledLoad": {"ratePerKWhAUD": 0.2314}}},
+        "timeOfUseTariffSmallBusiness": {"type": "time_of_use_2period", "customerType": "small_business", "supplyChargeDailyAUD": 1.6722,
+          "usageCharges": {"peak": {"description": "9 am to 9 pm weekdays", "ratePerKWhAUD": 0.3579}, "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2028}}}
+      },
+      "source": "ESC Victorian Default Offer 2025-26",
+      "sourceUrl": "https://www.esc.vic.gov.au/electricity-and-gas/prices-tariffs-and-benchmarks/victorian-default-offer",
+      "verified": true,
+      "dateScrapped": "2026-04-13"
+    },
+    {
+      "id": "powercor-vic",
+      "providerName": "Powercor",
+      "providerType": "distributor",
+      "state": "VIC",
+      "distributionZone": "Powercor",
+      "distributionZoneNote": "Covers western Melbourne suburbs and large regional areas including Ballarat and Geelong",
+      "postcodeExamples": ["3011", "3012", "3015", "3016", "3020", "3021", "3025", "3029", "3030"],
+      "electricityTariffs": {
+        "flatTariff": {"type": "flat", "customerType": "domestic", "supplyChargeDailyAUD": 1.3684,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.3009}, "controlledLoad": {"ratePerKWhAUD": 0.2122}}},
+        "flatTariffSmallBusiness": {"type": "flat", "customerType": "small_business", "supplyChargeDailyAUD": 1.5905,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.2927}}},
+        "timeOfUseTariff": {"type": "time_of_use_2period", "customerType": "domestic", "supplyChargeDailyAUD": 1.3684,
+          "usageCharges": {"peak": {"description": "3 pm to 9 pm everyday", "ratePerKWhAUD": 0.4040},
+            "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2365}, "controlledLoad": {"ratePerKWhAUD": 0.2122}}},
+        "timeOfUseTariffSmallBusiness": {"type": "time_of_use_2period", "customerType": "small_business", "supplyChargeDailyAUD": 1.5905,
+          "usageCharges": {"peak": {"description": "9 am to 9 pm weekdays", "ratePerKWhAUD": 0.3895}, "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2111}}}
+      },
+      "source": "ESC Victorian Default Offer 2025-26",
+      "sourceUrl": "https://www.esc.vic.gov.au/electricity-and-gas/prices-tariffs-and-benchmarks/victorian-default-offer",
+      "verified": true,
+      "dateScrapped": "2026-04-13"
+    },
+    {
+      "id": "united-energy-vic",
+      "providerName": "United Energy",
+      "providerType": "distributor",
+      "state": "VIC",
+      "distributionZone": "United Energy",
+      "distributionZoneNote": "Covers south-eastern Melbourne suburbs including Mornington Peninsula",
+      "postcodeExamples": ["3145", "3148", "3150", "3163", "3168", "3170", "3175", "3195", "3930"],
+      "electricityTariffs": {
+        "flatTariff": {"type": "flat", "customerType": "domestic", "supplyChargeDailyAUD": 1.1648,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.2884}, "controlledLoad": {"ratePerKWhAUD": 0.2107}}},
+        "flatTariffSmallBusiness": {"type": "flat", "customerType": "small_business", "supplyChargeDailyAUD": 1.3711,
+          "usageCharges": {"structure": "anytime", "anytime": {"ratePerKWhAUD": 0.2789}}},
+        "timeOfUseTariff": {"type": "time_of_use_2period", "customerType": "domestic", "supplyChargeDailyAUD": 1.1648,
+          "usageCharges": {"peak": {"description": "3 pm to 9 pm everyday", "ratePerKWhAUD": 0.3837},
+            "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2299}, "controlledLoad": {"ratePerKWhAUD": 0.2107}}},
+        "timeOfUseTariffSmallBusiness": {"type": "time_of_use_2period", "customerType": "small_business", "supplyChargeDailyAUD": 1.3711,
+          "usageCharges": {"peak": {"description": "9 am to 9 pm weekdays", "ratePerKWhAUD": 0.3501}, "offPeak": {"description": "All other times", "ratePerKWhAUD": 0.2027}}}
+      },
+      "source": "ESC Victorian Default Offer 2025-26",
+      "sourceUrl": "https://www.esc.vic.gov.au/electricity-and-gas/prices-tariffs-and-benchmarks/victorian-default-offer",
+      "verified": true,
+      "dateScrapped": "2026-04-13"
+    }
+  ]
+}
