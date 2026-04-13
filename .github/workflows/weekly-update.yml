@@ -2,8 +2,8 @@ name: Weekly Price Update
 
 on:
   schedule:
-    - cron: '0 6 * * 0'   # Every Sunday at 6 AM UTC (4 PM AEST)
-  workflow_dispatch:       # Manual trigger from GitHub UI
+    - cron: '0 6 * * 0' # Every Sunday at 6 AM UTC (4 PM AEST)
+  workflow_dispatch: # Manual trigger from GitHub UI
     inputs:
       seed_only:
         description: 'Run seed script only (first-time setup)'
@@ -19,14 +19,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # ── Python setup ──────────────────────────────────────────────────
+      # -- Python setup ------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install Python dependencies
-        run: pip install requests
+        run: pip install requests beautifulsoup4
 
       - name: Seed Supabase from JSON files
         if: github.event.inputs.seed_only == 'true'
@@ -42,7 +42,14 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python scripts/scrape_and_update.py
 
-      # ── Node.js setup (grocery scraper + future JS scrapers) ─────────
+      - name: Run energy price scraper (Victorian Default Offer)
+        if: github.event.inputs.seed_only != 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scripts/scrape_energy_prices.py
+
+      # -- Node.js setup (grocery scraper + future JS scrapers) -------------
       - name: Set up Node.js
         if: github.event.inputs.seed_only != 'true'
         uses: actions/setup-node@v4
@@ -60,23 +67,23 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: node scripts/scrape-groceries.js
 
-      # ── ADD NEW SCRAPERS HERE ─────────────────────────────────────────
+      # -- ADD NEW SCRAPERS HERE ---------------------------------------------
       # Python example:
-      #   - name: Run <name> scraper
-      #     if: github.event.inputs.seed_only != 'true'
-      #     env:
-      #       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      #       SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-      #     run: python scripts/<your-script>.py
+      # - name: Run <name> scraper
+      #   if: github.event.inputs.seed_only != 'true'
+      #   env:
+      #     SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      #     SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      #   run: python scripts/<your-script>.py
       #
       # Node.js example:
-      #   - name: Run <name> scraper
-      #     if: github.event.inputs.seed_only != 'true'
-      #     env:
-      #       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      #       SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-      #     run: node scripts/<your-script>.js
-      # ─────────────────────────────────────────────────────────────────
+      # - name: Run <name> scraper
+      #   if: github.event.inputs.seed_only != 'true'
+      #   env:
+      #     SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      #     SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      #   run: node scripts/<your-script>.js
+      # ---------------------------------------------------------------------
 
       - name: Log completion
         run: echo "All scrapers completed at $(date '+%Y-%m-%d %H:%M:%S UTC')"
