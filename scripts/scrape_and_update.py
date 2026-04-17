@@ -189,57 +189,76 @@ def scrape_businesses(session: requests.Session) -> list[dict]:
 
 # Ã¢ÂÂÃ¢ÂÂ Fuel scraping Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
-# PetrolSpy fuel type codes -> our column names
-PETROLSPY_TO_COL = {
-    "ULP":  "ulp91",
-    "E10":  "e10",
-    "PULP": "premium95",
-    "P98":  "premium98",
-    "DL":   "diesel",
-    "LPG":  "lpg",
+# -- Fuel type code mappings --------------------------------------------------
+
+# Victorian Servo Saver API fuel type codes -> our column names
+SERVO_SAVER_TO_COL = {
+    "ULP":    "ulp91",
+    "E10":    "e10",
+    "PULP":   "premium95",
+    "PULP98": "premium98",
+    "PDL":    "diesel",
+    "LPG":    "lpg",
 }
 
-PETROLSPY_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; EastsidePriceScraper/2.0)",
-    "Accept": "application/json",
-    "Referer": "https://petrolspy.com.au/",
-}
+# Servo Saver API — postcodes covering our Eastern suburbs
+# (the API accepts a postcode and returns all stations within ~5km)
+SERVO_SAVER_BASE = "https://api.servosaver.vic.gov.au/fuel/prices"
 
 
-def fetch_petrolspy(session: requests.Session, postcode: str) -> list[dict]:
+def fetch_servo_saver(session: requests.Session, consumer_id: str) -> list[dict]:
     """
-    Fetch all stations near a postcode from PetrolSpy's public JSON feed.
-    Endpoint: GET https://petrolspy.com.au/webservice-1/station/list?postcode=<postcode>
-    Response: {"success": true, "message": {"list": [...]}}
+    Fetch ALL Victorian fuel station prices from the Servo Saver Public API.
+    Docs: https://service.vic.gov.au/find-services/transport-and-driving/servo-saver/help-centre/servo-saver-public-api
+    Returns a flat list of station price dicts.
     """
-    url = "https://petrolspy.com.au/webservice-1/station/list"
+    headers = {
+        "Consumer-Id": consumer_id,
+        "Accept": "application/json",
+        "User-Agent": "EastsidePriceScraper/3.0",
+    }
     try:
-        resp = session.get(url, params={"postcode": postcode},
-                           headers=PETROLSPY_HEADERS, timeout=15)
+        resp = session.get(SERVO_SAVER_BASE, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
-        return data.get("message", {}).get("list", [])
+        # Response shape (subject to confirmation from API docs):
+        # {"stations": [...]} or a flat list
+        if isinstance(data, list):
+            return data
+        return data.get("stations", data.get("data", []))
     except Exception as e:
-        print(f"    PetrolSpy error for {postcode}: {e}")
+        print(f"    Servo Saver API error: {e}")
         return []
 
 
-def parse_petrolspy_stations(raw_stations: list[dict], suburb: dict) -> list[dict]:
-    """Convert PetrolSpy raw station dicts into our fuel_stations schema rows."""
+def parse_servo_saver_stations(all_stations: list[dict]) -> list[dict]:
+    """
+    Filter Servo Saver results to our target postcodes and map to
+    our fuel_stations schema.
+    """
+    target_postcodes = {s["postcode"] for s in SUBURBS}
+    # Build a quick postcode -> suburb name lookup
+    postcode_to_suburb = {s["postcode"]: s["name"] for s in SUBURBS}
+
     rows = []
-    for st in raw_stations:
+    for st in all_stations:
+        postcode = str(st.get("postCode", st.get("postcode", "")))
+        if postcode not in target_postcodes:
+            continue
+
+        suburb_name = postcode_to_suburb[postcode]
         price_cols: dict[str, Optional[float]] = {}
         cheapest_price = None
         cheapest_type = None
 
         for p in st.get("prices", []):
-            fuel_type = p.get("type", "")
-            col = PETROLSPY_TO_COL.get(fuel_type)
+            fuel_code = p.get("fuelType", p.get("type", ""))
+            col = SERVO_SAVER_TO_COL.get(fuel_code)
             if col is None:
                 continue
             try:
-                price_val = float(p["price"])
-            except (KeyError, ValueError, TypeError):
+                price_val = float(p.get("price", p.get("amount", 0)))
+            except (ValueError, TypeError):
                 continue
             price_cols[col] = price_val
             if col == "ulp91":
@@ -247,24 +266,22 @@ def parse_petrolspy_stations(raw_stations: list[dict], suburb: dict) -> list[dic
                 cheapest_type = "ULP91"
             elif cheapest_price is None:
                 cheapest_price = price_val
-                cheapest_type = fuel_type
+                cheapest_type = fuel_code
 
-        raw_id = f"ps-{st.get('id', suburb['postcode'] + '-' + st.get('name', 'unknown'))}"
-        row_id = re.sub(r"[^a-zA-Z0-9\-]", "-", raw_id)[:80]
+        station_id = str(st.get("stationId", st.get("id", "")))
+        row_id = re.sub(r"[^a-zA-Z0-9\-]", "-", f"ss-{station_id}")[:80]
 
-        google_maps = None
-        lat = st.get("lat")
-        lng = st.get("lng")
-        if lat and lng:
-            google_maps = f"https://www.google.com/maps?q={lat},{lng}"
+        lat = st.get("latitude", st.get("lat"))
+        lng = st.get("longitude", st.get("lng"))
+        google_maps = f"https://www.google.com/maps?q={lat},{lng}" if lat and lng else None
 
         rows.append({
             "id": row_id,
-            "station_name": st.get("name", "Unknown"),
-            "brand": st.get("brand", "Unknown"),
-            "suburb": suburb["name"],
-            "postcode": suburb["postcode"],
-            "address": st.get("address", ""),
+            "station_name": st.get("stationName", st.get("name", "Unknown")),
+            "brand": st.get("brand", st.get("brandName", "Unknown")),
+            "suburb": suburb_name,
+            "postcode": postcode,
+            "address": st.get("address", st.get("streetAddress", "")),
             "ulp91":     price_cols.get("ulp91"),
             "e10":       price_cols.get("e10"),
             "premium95": price_cols.get("premium95"),
@@ -273,8 +290,8 @@ def parse_petrolspy_stations(raw_stations: list[dict], suburb: dict) -> list[dic
             "lpg":       price_cols.get("lpg"),
             "cheapest_fuel": cheapest_type,
             "google_maps_url": google_maps,
-            "source": "PetrolSpy",
-            "source_url": f"https://petrolspy.com.au/map/location/au/vic/{suburb['postcode']}",
+            "source": "Servo Saver (Victorian Government)",
+            "source_url": "https://service.vic.gov.au/find-services/transport-and-driving/servo-saver",
             "verified": True,
             "date_scrapped": TODAY,
             "last_updated": datetime.datetime.utcnow().isoformat(),
@@ -282,22 +299,13 @@ def parse_petrolspy_stations(raw_stations: list[dict], suburb: dict) -> list[dic
     return rows
 
 
-def scrape_fuel(session: requests.Session) -> tuple[list[dict], list[dict]]:
-    """
-    Scrape current fuel prices via PetrolSpy's public JSON endpoint.
-    Returns (station_rows, summary_rows).
-    """
-    station_rows = []
+def build_suburb_summary(station_rows: list[dict]) -> list[dict]:
+    """Build suburb-level fuel summary from a list of station rows."""
     summary_by_suburb: dict[str, dict] = {}
-
     for suburb in SUBURBS:
-        print(f"    Fetching {suburb['name']} ({suburb['postcode']})...")
-        raw = fetch_petrolspy(session, suburb["postcode"])
-        rows = parse_petrolspy_stations(raw, suburb)
-        station_rows.extend(rows)
-
-        ulp_prices = [r["ulp91"]   for r in rows if r.get("ulp91")]
-        e10_prices  = [r["e10"]    for r in rows if r.get("e10")]
+        rows = [r for r in station_rows if r["suburb"] == suburb["name"]]
+        ulp_prices = [r["ulp91"]  for r in rows if r.get("ulp91")]
+        e10_prices  = [r["e10"]   for r in rows if r.get("e10")]
         dsl_prices  = [r["diesel"] for r in rows if r.get("diesel")]
 
         if ulp_prices or e10_prices or dsl_prices:
@@ -319,11 +327,96 @@ def scrape_fuel(session: requests.Session) -> tuple[list[dict], list[dict]]:
                 "avg_ulp91": round(sum(ulp_prices) / len(ulp_prices), 2) if ulp_prices else None,
                 "last_updated": TODAY,
             }
+    return list(summary_by_suburb.values())
+
+
+def scrape_fuel(session: requests.Session) -> tuple[list[dict], list[dict]]:
+    """
+    Scrape current fuel prices.
+    - Uses Victorian Servo Saver API if SERVO_SAVER_KEY secret is set (accurate, official).
+    - Falls back to PetrolSpy if key not yet available.
+    Returns (station_rows, summary_rows).
+    """
+    servo_saver_key = os.environ.get("SERVO_SAVER_KEY", "").strip()
+
+    if servo_saver_key:
+        print("  Using Victorian Servo Saver API (official government data)...")
+        all_stations = fetch_servo_saver(session, servo_saver_key)
+        if all_stations:
+            station_rows = parse_servo_saver_stations(all_stations)
+            print(f"  Fuel stations fetched: {len(station_rows)}")
+            return station_rows, build_suburb_summary(station_rows)
+        else:
+            print("  Servo Saver returned no data — falling back to PetrolSpy")
+
+    # Fallback: PetrolSpy (may be blocked by GitHub Actions IPs)
+    print("  SERVO_SAVER_KEY not set — using PetrolSpy fallback")
+    print("  (Apply at service.vic.gov.au to get accurate daily data)")
+    station_rows = []
+
+    for suburb in SUBURBS:
+        print(f"    Fetching {suburb['name']} ({suburb['postcode']})...")
+        url = "https://petrolspy.com.au/webservice-1/station/list"
+        try:
+            resp = session.get(
+                url,
+                params={"postcode": suburb["postcode"]},
+                headers={
+                    "User-Agent": "Mozilla/5.0 (compatible; EastsidePriceScraper/3.0)",
+                    "Accept": "application/json",
+                    "Referer": "https://petrolspy.com.au/",
+                },
+                timeout=15,
+            )
+            resp.raise_for_status()
+            raw = resp.json().get("message", {}).get("list", [])
+
+            for st in raw:
+                price_cols: dict[str, Optional[float]] = {}
+                cheapest_price = None
+                cheapest_type = None
+                fuel_map = {"ULP": "ulp91", "E10": "e10", "PULP": "premium95",
+                            "P98": "premium98", "DL": "diesel", "LPG": "lpg"}
+                for p in st.get("prices", []):
+                    col = fuel_map.get(p.get("type", ""))
+                    if not col:
+                        continue
+                    try:
+                        pv = float(p["price"])
+                    except (KeyError, ValueError, TypeError):
+                        continue
+                    price_cols[col] = pv
+                    if col == "ulp91":
+                        cheapest_price, cheapest_type = pv, "ULP91"
+                    elif cheapest_price is None:
+                        cheapest_price, cheapest_type = pv, p.get("type")
+
+                raw_id = f"ps-{st.get('id', suburb['postcode'])}"
+                row_id = re.sub(r"[^a-zA-Z0-9\-]", "-", raw_id)[:80]
+                lat, lng = st.get("lat"), st.get("lng")
+                station_rows.append({
+                    "id": row_id,
+                    "station_name": st.get("name", "Unknown"),
+                    "brand": st.get("brand", "Unknown"),
+                    "suburb": suburb["name"],
+                    "postcode": suburb["postcode"],
+                    "address": st.get("address", ""),
+                    **price_cols,
+                    "cheapest_fuel": cheapest_type,
+                    "google_maps_url": f"https://www.google.com/maps?q={lat},{lng}" if lat and lng else None,
+                    "source": "PetrolSpy",
+                    "source_url": f"https://petrolspy.com.au/map/location/au/vic/{suburb['postcode']}",
+                    "verified": True,
+                    "date_scrapped": TODAY,
+                    "last_updated": datetime.datetime.utcnow().isoformat(),
+                })
+        except Exception as e:
+            print(f"    PetrolSpy error for {suburb['postcode']}: {e}")
 
         time.sleep(0.5)
 
     print(f"  Fuel stations scraped: {len(station_rows)}")
-    return station_rows, list(summary_by_suburb.values())
+    return station_rows, build_suburb_summary(station_rows)
 
 
 # Ã¢ÂÂÃ¢ÂÂ Main Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ

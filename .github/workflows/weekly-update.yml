@@ -1,8 +1,8 @@
-name: Weekly Price Update
+name: Daily Price Update
 
 on:
   schedule:
-    - cron: '0 6 * * 0' # Every Sunday at 6 AM UTC (4 PM AEST)
+    - cron: '0 20 * * *' # Every day at 6 AM AEST (8 PM UTC previous day)
   workflow_dispatch: # Manual trigger from GitHub UI
     inputs:
       seed_only:
@@ -35,11 +35,12 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python scripts/seed_supabase.py
 
-      - name: Run weekly price scraper (businesses + fuel)
+      - name: Run daily price scraper (businesses + fuel)
         if: github.event.inputs.seed_only != 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SERVO_SAVER_KEY: ${{ secrets.SERVO_SAVER_KEY }}
         run: python scripts/scrape_and_update.py
 
       - name: Run energy price scraper (Victorian Default Offer)
