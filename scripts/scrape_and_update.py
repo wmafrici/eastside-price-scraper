@@ -18,6 +18,7 @@ import os
 import json
 import time
 import re
+import uuid
 import requests
 import datetime
 from typing import Optional
@@ -191,58 +192,67 @@ def scrape_businesses(session: requests.Session) -> list[dict]:
 
 # -- Fuel type code mappings --------------------------------------------------
 
-# Victorian Servo Saver API fuel type codes -> our column names
+# Victorian Fair Fuel Open Data API fuel type codes -> our column names
+# https://api.fuel.service.vic.gov.au/open-data/v1
 SERVO_SAVER_TO_COL = {
-    "ULP":    "ulp91",
-    "E10":    "e10",
-    "PULP":   "premium95",
-    "PULP98": "premium98",
-    "PDL":    "diesel",
-    "LPG":    "lpg",
+    "U91":  "ulp91",
+    "E10":  "e10",
+    "P95":  "premium95",
+    "P98":  "premium98",
+    "DSL":  "diesel",
+    "PDSL": "diesel",   # premium diesel -> diesel column
+    "LPG":  "lpg",
 }
 
-# Servo Saver API — postcodes covering our Eastern suburbs
-# (the API accepts a postcode and returns all stations within ~5km)
-SERVO_SAVER_BASE = "https://api.servosaver.vic.gov.au/fuel/prices"
+FAIR_FUEL_BASE = "https://api.fuel.service.vic.gov.au/open-data/v1/fuel/prices"
 
 
 def fetch_servo_saver(session: requests.Session, consumer_id: str) -> list[dict]:
     """
-    Fetch ALL Victorian fuel station prices from the Servo Saver Public API.
-    Docs: https://service.vic.gov.au/find-services/transport-and-driving/servo-saver/help-centre/servo-saver-public-api
-    Returns a flat list of station price dicts.
+    Fetch ALL Victorian fuel station prices from the Fair Fuel Open Data API.
+    Docs: https://api.fuel.service.vic.gov.au/open-data/v1
+    Required headers: x-consumer-id, x-transactionid (UUID v4 per request), User-Agent
+    Response: {"fuelPriceDetails": [{fuelStation: {...}, fuelPrices: [...]}]}
+    Returns a flat list of fuelPriceDetails dicts.
     """
     headers = {
-        "Consumer-Id": consumer_id,
-        "Accept": "application/json",
+        "x-consumer-id": consumer_id,
+        "x-transactionid": str(uuid.uuid4()),
         "User-Agent": "EastsidePriceScraper/3.0",
+        "Accept": "application/json",
     }
     try:
-        resp = session.get(SERVO_SAVER_BASE, headers=headers, timeout=30)
+        resp = session.get(FAIR_FUEL_BASE, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
-        # Response shape (subject to confirmation from API docs):
-        # {"stations": [...]} or a flat list
-        if isinstance(data, list):
-            return data
-        return data.get("stations", data.get("data", []))
+        return data.get("fuelPriceDetails", [])
     except Exception as e:
-        print(f"    Servo Saver API error: {e}")
+        print(f"    Fair Fuel API error: {e}")
         return []
 
 
-def parse_servo_saver_stations(all_stations: list[dict]) -> list[dict]:
+def _extract_postcode(address: str) -> str:
+    """Extract 4-digit Australian postcode from address string."""
+    # Look for 4-digit number at end of address, e.g. "123 Main St, Melbourne VIC 3000"
+    matches = re.findall(r"\b(\d{4})\b", address)
+    return matches[-1] if matches else ""
+
+
+def parse_servo_saver_stations(all_entries: list[dict]) -> list[dict]:
     """
-    Filter Servo Saver results to our target postcodes and map to
+    Filter Fair Fuel Open Data API results to our target postcodes and map to
     our fuel_stations schema.
+    Each entry has: fuelStation (id, name, brandId, address, location) + fuelPrices[]
     """
     target_postcodes = {s["postcode"] for s in SUBURBS}
-    # Build a quick postcode -> suburb name lookup
     postcode_to_suburb = {s["postcode"]: s["name"] for s in SUBURBS}
 
     rows = []
-    for st in all_stations:
-        postcode = str(st.get("postCode", st.get("postcode", "")))
+    for entry in all_entries:
+        station = entry.get("fuelStation", {})
+        address = station.get("address", "")
+        postcode = _extract_postcode(address)
+
         if postcode not in target_postcodes:
             continue
 
@@ -251,37 +261,44 @@ def parse_servo_saver_stations(all_stations: list[dict]) -> list[dict]:
         cheapest_price = None
         cheapest_type = None
 
-        for p in st.get("prices", []):
-            fuel_code = p.get("fuelType", p.get("type", ""))
+        for p in entry.get("fuelPrices", []):
+            if not p.get("isAvailable", True):
+                continue
+            fuel_code = p.get("fuelType", "")
             col = SERVO_SAVER_TO_COL.get(fuel_code)
             if col is None:
                 continue
             try:
-                price_val = float(p.get("price", p.get("amount", 0)))
+                price_val = float(p.get("price", 0))
             except (ValueError, TypeError):
                 continue
-            price_cols[col] = price_val
-            if col == "ulp91":
+            # Only overwrite diesel if we don't have a value yet (prefer DSL over PDSL)
+            if col in price_cols and col == "diesel":
+                pass
+            else:
+                price_cols[col] = price_val
+            if col == "ulp91" and cheapest_price is None:
                 cheapest_price = price_val
                 cheapest_type = "ULP91"
             elif cheapest_price is None:
                 cheapest_price = price_val
                 cheapest_type = fuel_code
 
-        station_id = str(st.get("stationId", st.get("id", "")))
-        row_id = re.sub(r"[^a-zA-Z0-9\-]", "-", f"ss-{station_id}")[:80]
+        station_id = station.get("id", "")
+        row_id = re.sub(r"[^a-zA-Z0-9\-]", "-", f"ff-{station_id}")[:80]
 
-        lat = st.get("latitude", st.get("lat"))
-        lng = st.get("longitude", st.get("lng"))
+        loc = station.get("location", {})
+        lat = loc.get("latitude")
+        lng = loc.get("longitude")
         google_maps = f"https://www.google.com/maps?q={lat},{lng}" if lat and lng else None
 
         rows.append({
             "id": row_id,
-            "station_name": st.get("stationName", st.get("name", "Unknown")),
-            "brand": st.get("brand", st.get("brandName", "Unknown")),
+            "station_name": station.get("name", "Unknown"),
+            "brand": station.get("brandId", "Unknown"),
             "suburb": suburb_name,
             "postcode": postcode,
-            "address": st.get("address", st.get("streetAddress", "")),
+            "address": address,
             "ulp91":     price_cols.get("ulp91"),
             "e10":       price_cols.get("e10"),
             "premium95": price_cols.get("premium95"),
@@ -290,7 +307,7 @@ def parse_servo_saver_stations(all_stations: list[dict]) -> list[dict]:
             "lpg":       price_cols.get("lpg"),
             "cheapest_fuel": cheapest_type,
             "google_maps_url": google_maps,
-            "source": "Servo Saver (Victorian Government)",
+            "source": "Fair Fuel Open Data (Victorian Government)",
             "source_url": "https://service.vic.gov.au/find-services/transport-and-driving/servo-saver",
             "verified": True,
             "date_scrapped": TODAY,
