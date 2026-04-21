@@ -40,6 +40,8 @@ SUBURBS = [
     {"name": "Blackburn",      "postcode": "3130"},
     {"name": "Box Hill",       "postcode": "3128"},
     {"name": "Mooroolbark",    "postcode": "3138"},
+    {"name": "Forest Hill",    "postcode": "3131"},
+    {"name": "Knox",           "postcode": "3148"},
 ]
 
 CATEGORIES = ["barbers", "gyms", "salons", "cafes", "dentists"]
