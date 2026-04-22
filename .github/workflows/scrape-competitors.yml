@@ -1,0 +1,62 @@
+name: Scrape Competitors (On-Demand)
+
+on:
+  workflow_dispatch:
+    inputs:
+      suburb:
+        description: 'Suburb to scrape competitors for'
+        required: true
+        type: choice
+        options:
+          - Rowville
+          - Doncaster
+          - Glen Waverley
+          - Boronia
+          - Ferntree Gully
+          - Belgrave
+          - Croydon
+          - Ringwood
+          - Blackburn
+          - Box Hill
+          - Mooroolbark
+          - Forest Hill
+          - Knox
+      category:
+        description: 'Business category to scrape'
+        required: true
+        type: choice
+        options:
+          - barbers
+          - gyms
+          - salons
+          - cafes
+          - dentists
+
+jobs:
+  scrape-competitors:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run competitor scraper
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
+        run: |
+          python scripts/scrape_competitors.py \
+            --suburb "${{ github.event.inputs.suburb }}" \
+            --category "${{ github.event.inputs.category }}"
+
+      - name: Log completion
+        run: echo "Competitor scrape completed for ${{ github.event.inputs.suburb }} / ${{ github.event.inputs.category }} at $(date '+%Y-%m-%d %H:%M:%S UTC')"
