@@ -44,7 +44,7 @@ SUBURBS = [
     {"name": "Knox",           "postcode": "3148"},
 ]
 
-CATEGORIES = ["barbers", "gyms", "salons", "cafes", "dentists"]
+CATEGORIES = ["barbers", "gyms", "salons", "cafes", "dentists"]  # used for reference only
 
 FUEL_BRANDS = ["Ampol", "BP", "7-Eleven", "Coles Express", "United", "Liberty",
                "Shell", "Metro", "Reddy Express", "Freedom", "Astron"]
@@ -107,87 +107,9 @@ def extract_rating(text: str) -> Optional[float]:
     return float(m.group(1)) if m else None
 
 
-# Ã¢ÂÂÃ¢ÂÂ Business scraping Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
-CATEGORY_QUERIES = {
-    "barbers": ("barber", "men's haircut"),
-    "gyms":    ("gym", "monthly membership"),
-    "salons":  ("hair salon", "women's haircut"),
-    "cafes":   ("cafe", "flat white"),
-    "dentists": ("dentist", "check-up"),
-}
-
-CATEGORY_SERVICE = {
-    "barbers":  "Men's haircut",
-    "gyms":     "Monthly membership",
-    "salons":   "Women's haircut",
-    "cafes":    "Flat white",
-    "dentists": "General check-up",
-}
-
-
-def scrape_businesses(session: requests.Session) -> list[dict]:
-    """
-    Use the Google Custom Search JSON API (or fallback: DuckDuckGo instant)
-    to find current prices for each suburb ÃÂ category combination.
-
-    Since this runs in GitHub Actions (no proxy restrictions), it can hit
-    public search endpoints.
-    """
-    rows = []
-    errors = []
-
-    for suburb in SUBURBS:
-        for category in CATEGORIES:
-            keyword, price_term = CATEGORY_QUERIES[category]
-            query = f"{suburb['name']} {keyword} price {price_term} Melbourne 2026"
-
-            try:
-                # DuckDuckGo instant answers Ã¢ÂÂ lightweight, no API key needed
-                resp = session.get(
-                    "https://api.duckduckgo.com/",
-                    params={"q": query, "format": "json", "no_html": "1", "skip_disambig": "1"},
-                    timeout=10,
-                )
-                data = resp.json()
-
-                # Extract AbstractText for context
-                abstract = data.get("AbstractText", "") or ""
-                answer = data.get("Answer", "") or ""
-                combined = f"{abstract} {answer}"
-
-                price = extract_price(combined)
-                rating = extract_rating(combined)
-
-                if price:
-                    row_id = f"{suburb['name'].lower().replace(' ', '')}-{category}-scraped"
-                    rows.append({
-                        "id": row_id,
-                        "business_name": f"{suburb['name']} {keyword.title()} (scraped)",
-                        "suburb": suburb["name"],
-                        "postcode": suburb["postcode"],
-                        "category": category,
-                        "service_type": CATEGORY_SERVICE[category],
-                        "price": price,
-                        "currency": "AUD",
-                        "rating": rating,
-                        "source": "DuckDuckGo / web scrape",
-                        "verified": False,
-                        "verification_level": "50%",
-                        "date_scrapped": TODAY,
-                        "last_updated": datetime.datetime.utcnow().isoformat(),
-                    })
-
-                time.sleep(0.5)  # be polite
-
-            except Exception as e:
-                errors.append(f"{suburb['name']}/{category}: {e}")
-                continue
-
-    print(f"  Businesses scraped: {len(rows)}, errors: {len(errors)}")
-    if errors:
-        print(f"  Errors: {errors[:5]}")
-    return rows
+# Business competitor scraping is handled on-demand by scripts/scrape_competitors.py
+# Run that script manually when onboarding a new trial client.
 
 
 # Ã¢ÂÂÃ¢ÂÂ Fuel scraping Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
@@ -445,21 +367,8 @@ def main():
     session = requests.Session()
     session.headers.update({"User-Agent": "EastsidePriceScraper/1.0"})
 
-    total_businesses = 0
     total_fuel = 0
     all_errors = []
-
-    # 1. Scrape businesses
-    print("\n[1/3] Scraping business prices...")
-    try:
-        biz_rows = scrape_businesses(session)
-        if biz_rows:
-            result = supabase_upsert("businesses", biz_rows)
-            total_businesses = result["upserted"]
-            print(f"  Ã¢ÂÂ Upserted {total_businesses} business rows")
-    except Exception as e:
-        all_errors.append(f"businesses: {e}")
-        print(f"  Ã¢ÂÂ Error: {e}")
 
     # 2. Scrape fuel
     print("\n[2/3] Scraping fuel prices...")
@@ -478,11 +387,8 @@ def main():
 
     # 3. Log run
     print("\n[3/3] Logging run...")
-    status = "success" if not all_errors else ("partial" if total_businesses + total_fuel > 0 else "failed")
-    supabase_insert_log(total_businesses, total_fuel, "; ".join(all_errors), status)
     print(f"  Ã¢ÂÂ Logged: status={status}")
 
-    print(f"\n=== Done. Businesses: {total_businesses}, Fuel: {total_fuel} ===")
 
 
 if __name__ == "__main__":
