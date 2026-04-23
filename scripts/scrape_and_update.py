@@ -8,7 +8,6 @@ Flow:
   1. Search web for current prices (businesses + fuel)
   2. Upsert results into Supabase
   3. Log the run result
-
 Environment variables (set as GitHub Actions secrets):
   SUPABASE_URL   Ã¢ÂÂ https://mpbphijerbizlvfhssww.supabase.co
   SUPABASE_KEY   Ã¢ÂÂ service_role key
@@ -150,8 +149,6 @@ def fetch_servo_saver(session: requests.Session, consumer_id: str) -> list[dict]
         resp.raise_for_status()
         data = resp.json()
         return data.get("fuelPriceDetails", [])
-    except Exception as e:
-        print(f"    Fair Fuel API error: {e}")
         return []
 
 
@@ -387,7 +384,8 @@ def main():
 
     # 3. Log run
     print("\n[3/3] Logging run...")
-    print(f"  Ã¢ÂÂ Logged: status={status}")
+    status = "success" if not all_errors else f"errors: {all_errors}"
+    print(f"  \u2713 Run complete: {status}")
 
 
 
