@@ -149,6 +149,7 @@ def fetch_servo_saver(session: requests.Session, consumer_id: str) -> list[dict]
         resp.raise_for_status()
         data = resp.json()
         return data.get("fuelPriceDetails", [])
+    except Exception:
         return []
 
 
