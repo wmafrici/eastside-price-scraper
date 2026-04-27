@@ -1,8 +1,7 @@
 name: Daily Price Update
 
 on:
-  schedule:
-    - cron: '0 20 * * *' # Every day at 6 AM AEST (8 PM UTC previous day)
+  
   workflow_dispatch: # Manual trigger from GitHub UI
     inputs:
       seed_only:
